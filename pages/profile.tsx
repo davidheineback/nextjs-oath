@@ -1,15 +1,16 @@
-import Link from 'next/link';
-import React from 'react';
-import getGoogleOAuthURL from '../utils/getGoogleURL';
-import { withIronSessionSsr } from "iron-session/next";
+import React from 'react'
+import { NextApiRequest, NextApiResponse } from 'next'
 
+import { withIronSessionSsr } from "iron-session/next";
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }: any) {
-
+    req.session.user = 'TAMIM'
+    console.log(req.session)
+    await req.session.save()
     return {
       props: {
-        user: req.session.user || 'DAVID'
+        user: req.session.user
       },
     };
   },
@@ -23,18 +24,15 @@ export const getServerSideProps = withIronSessionSsr(
   },
 );
 
-function Home ({ user }: any) {
+const Profile = ({ user }: any) => {
+  // Show the user. No loading state is required
   return (
-    <div>
-      <h1>INDEX PAGE</h1>
-      <div>{user}</div>
-      <Link href={getGoogleOAuthURL()} passHref>
-        <button>
-          Log in with Google
-        </button>
-      </Link>
-    </div>
+    <>
+    <h1>Your Profile</h1>
+    <pre>{JSON.stringify(user, null, 2)}</pre>
+    </>
   )
 }
 
-export default Home
+export default Profile
+
