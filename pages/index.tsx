@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import getGoogleOAuthURL from '../utils/getGoogleURL';
 
-function Home() {
+function Home () {
   return (
     <div>
       <h1>NEXT JS</h1>
@@ -11,7 +11,6 @@ function Home() {
           Log in with Google
         </button>
       </Link>
-      
     </div>
   )
 }
